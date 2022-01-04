@@ -1,0 +1,92 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.4.613.9944",
+      "templateHash": "17386612715415396913"
+    }
+  },
+  "parameters": {
+    "vnetName": {
+      "type": "string",
+      "defaultValue": "vnet-sins-euwe-prod-infranet-003",
+      "metadata": {
+        "description": "Customer Productional Infra Lan"
+      }
+    },
+    "vnetAddressPrefix": {
+      "type": "string",
+      "defaultValue": "192.173.0.0/16",
+      "metadata": {
+        "description": "Productional InfraLAN"
+      }
+    },
+    "subnet1Prefix": {
+      "type": "string",
+      "defaultValue": "192.173.10.0/24",
+      "metadata": {
+        "description": "Server Subnet"
+      }
+    },
+    "subnet1Name": {
+      "type": "string",
+      "defaultValue": "Server Production Subnet",
+      "metadata": {
+        "description": "Server Subnet"
+      }
+    },
+    "subnet2Prefix": {
+      "type": "string",
+      "defaultValue": "192.173.20.0/24",
+      "metadata": {
+        "description": "Server Confidential Subnet"
+      }
+    },
+    "subnet2Name": {
+      "type": "string",
+      "defaultValue": "Server Confidential Subnet",
+      "metadata": {
+        "description": "Server Confidential Subnet"
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Location for all resources."
+      }
+    }
+  },
+  "functions": [],
+  "resources": [
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "apiVersion": "2020-06-01",
+      "name": "[parameters('vnetName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('vnetAddressPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[parameters('subnet1Name')]",
+            "properties": {
+              "addressPrefix": "[parameters('subnet1Prefix')]"
+            }
+          },
+          {
+            "name": "[parameters('subnet2Name')]",
+            "properties": {
+              "addressPrefix": "[parameters('subnet2Prefix')]"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
